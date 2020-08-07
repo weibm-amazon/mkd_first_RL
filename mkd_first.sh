@@ -3,6 +3,8 @@ input2=${2:-1}
 
 # prior specification of Logit demand model parameters (log_demand_base, beta, time_trend)
 PRIOR="norm"  # type of prior, "unif" or "norm"
+T_mkd_first=10
+T_mkd=90
 ### normal prior
 log_demand_base_mean=0
 log_demand_base_sd=1
@@ -18,7 +20,7 @@ n_core=1  # number of cores
 # n_core="parallel::detectCores()"  # number of cores
 
 counter=1
-for beta in `seq 0 0.5 3`
+for beta in 0 1 2 3
 do
   if [ $counter == $input1 ]
   then
@@ -29,7 +31,7 @@ done
 log_demand_base_orcl=$beta
 beta_orcl=$beta
 
-DIR0_export="RData/mkd_first"
+DIR0_export="RData/mkd_first_10"
 DIR1_export="${DIR0_export}/log_demand_base=${log_demand_base_orcl}_beta=${beta_orcl}"
 [ ! -d $DIR0_export ] && mkdir $DIR0_export
 [ ! -d $DIR1_export ] && mkdir $DIR1_export
@@ -44,6 +46,8 @@ R CMD BATCH --no-save --no-restore "--args
   FILE_lock='planning_mkd.lock' 
   FILE_export='${FILE_export}'
   PRIOR='$PRIOR'
+  T_mkd_first=${T_mkd_first}
+  T_mkd=${T_mkd}
   log_demand_base_mean=${log_demand_base_mean}
   log_demand_base_sd=${log_demand_base_sd}
   beta_mean=${beta_mean}

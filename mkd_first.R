@@ -13,7 +13,8 @@ default <- list(
   FILE_export = "mkd_first.RData",  # saving result to FILE_export
   # economic inputs
   Q = 300,  # initial inv level
-  T = 100,  # maximal planning horizon
+  T_mkd_first = 100,  # maximal markdown first duration
+  T_mkd = 100,  # maximal markdown duration
   h = 0.01,  # variable holding cost (per unit time per unit inventory)
   h0 = 0,  # fixed holding cost (per unit time if inventory level > 0)
   gamma = log(1/(1 - 0.15))/365,  # discounting factor
@@ -68,16 +69,13 @@ for(input in inputs) {
 
 source(FILE_header)
 
-# oracle parameters (if NULL, then generated randomly)
-param_orcl <- c(
-  log_demand_base = ifelse(!is.null(log_demand_base_orcl), log_demand_base_orcl, runif(1, log_demand_base_low, log_demand_base_upp)),
-  beta = ifelse(!is.null(beta_orcl), beta_orcl, runif(1, beta_low, beta_upp)),
-  time_trend = ifelse(!is.null(time_trend_orcl), time_trend_orcl, rnunif(1, time_trend_low, time_trend_upp)))
+# oracle parameters
+param_orcl <- c(log_demand_base = log_demand_base_orcl, beta = beta_orcl, time_trend = time_trend_orcl)
 
 # oracle demand function (for testing data generation)
 demand_orcl <- demand(param_orcl)
 
-result_mkd_first <- mkd_first(demand_orcl)(Q, T)
+result_mkd_first <- mkd_first(demand_orcl)(Q, T_mkd_first, T_mkd)
 result_mkd_first[c("value", "clearance_time", "recovery_rate")]
 
 result <- list(result = result_mkd_first, param_oracle = param_orcl, demand_oracle = demand_orcl)

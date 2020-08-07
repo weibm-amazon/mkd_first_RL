@@ -77,10 +77,7 @@ for(input in inputs) {
 source(FILE_header)
 
 # oracle parameters (if NULL, then generated randomly)
-param_orcl <- c(
-  log_demand_base = ifelse(!is.null(log_demand_base_orcl), log_demand_base_orcl, runif(1, log_demand_base_low, log_demand_base_upp)),
-  beta = ifelse(!is.null(beta_orcl), beta_orcl, runif(1, beta_low, beta_upp)),
-  time_trend = ifelse(!is.null(time_trend_orcl), time_trend_orcl, rnunif(1, time_trend_low, time_trend_upp)))
+param_orcl <- c(log_demand_base = log_demand_base_orcl, beta = beta_orcl, time_trend = time_trend_orcl)
 
 # oracle demand function (for testing data generation)
 demand_orcl <- demand(param_orcl)
