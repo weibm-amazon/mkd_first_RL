@@ -9,6 +9,9 @@ planning_funs.R incorporates functions for planning
   price_value: compute price value, regret functions from a planning_result
   regret_value: compute next-day-inventory value, regret functions
 mkd_first_RL.R implement an experiment of markdown first RL
+mkd_first_RL.sh: call mkd_first_RL.R from command line with desired inputs
 mkd_first.R implemnt an experiment of a prototye of existing markdown first
-mkd_first_RL.sh: call mkd_first_RL.R from command line with desire inputs
-mkd_first.sh: call mkd_first.R from command line with desire inputs
+mkd_first.sh: call mkd_first.R from command line with desired inputs
+Planning.R: pre-planning for planning_results at various params
+Planning.sh: call Planning.R with planning_fun = planning from command line with desired inputs
+Planning_mkd.sh: call Planning.R with planning_fun = planning_mkd from command line with desired inputs
